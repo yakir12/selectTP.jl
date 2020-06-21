@@ -28,8 +28,9 @@ function selectTP(file = "data")
         [track[][i]]
     end
     scatter!(ax, tp2, color = RGBA(1,0,0,0.5), markersize = 10px)
+    video = Node("")
     onmouseleftclick(mousestate) do state
-        println(string(r.metadata.comment, ",", tp[]))
+        println(string(video[], ",", tp[]))
     end
     c = Condition()
     h = layout[2,1] = LButton(scene, label = "Next!", tellwidth = false)
@@ -41,6 +42,7 @@ function selectTP(file = "data")
         for r in v.runs
             track[] = r.data.track.coords
             feeder[] = [r.data.feeder]
+            video[] = r.metadata.comment
             display(scene)
             wait(c)
         end
