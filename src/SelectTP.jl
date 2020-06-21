@@ -44,7 +44,7 @@ function selectTP(file = "data")
             video[] = r.metadata.comment
             display(scene)
             autolimits!(ax)
-            wait(c)
+            # wait(c)
         end
     end
 end
