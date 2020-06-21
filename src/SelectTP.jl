@@ -7,7 +7,6 @@ using AbstractPlotting, GLMakie, MakieLayout, Colors
 export selectTP
 
 function selectTP(file = "data")
-
     data = deserialize(file)
     scene, layout = layoutscene()
     ax = layout[1, 1] = LAxis(scene, aspect = DataAspect())
@@ -46,8 +45,6 @@ function selectTP(file = "data")
             wait(c)
         end
     end
-
 end
-selectTP()
 
 end
