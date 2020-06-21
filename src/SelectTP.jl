@@ -47,6 +47,7 @@ function selectTP(file = "data")
             wait(c)
         end
     end
+    @warn "Finished!!!"
 end
 
 end
