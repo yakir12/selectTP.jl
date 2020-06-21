@@ -18,14 +18,13 @@ function selectTP(file = "data")
     mousestate = addmousestate!(ax.scene)
     onmouseover(mousestate) do state
         tp1[] = state.pos
-        autolimits!(ax)
     end
     tp = map(tp1) do xy
         _, i = findmin(norm.(track[] .- Ref(xy)))
         i
     end
     tp2 = map(tp) do i
-        [track[][i]]
+        track[][i:i]
     end
     scatter!(ax, tp2, color = RGBA(1,0,0,0.5), markersize = 10px)
     video = Node("")
@@ -44,6 +43,7 @@ function selectTP(file = "data")
             feeder[] = [r.data.feeder]
             video[] = r.metadata.comment
             display(scene)
+            autolimits!(ax)
             wait(c)
         end
     end
