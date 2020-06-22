@@ -1,7 +1,7 @@
 name = "SelectTP"
 uuid = "1efd90a9-f24b-4f2a-8554-b6974af6d3a3"
 authors = ["yakir12 <12.yakir@gmail.com> and contributors"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 AbstractPlotting = "537997a7-5e4e-5d89-9595-2241ea00577e"

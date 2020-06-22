@@ -11,8 +11,10 @@ function selectTP(file = "data")
     scene, layout = layoutscene()
     ax = layout[1, 1] = LAxis(scene, aspect = DataAspect())
     track = Node(rand(DungBase.Point, 10))
+    rawtrack = Node(rand(DungBase.Point, 10))
     feeder = Node(rand(DungBase.Point, 1))
     lines!(ax, track)
+    lines!(ax, rawtrack, color = RGBA(0,1,0,0.5))
     scatter!(ax, feeder, color = :green, markersize = 8px)
     tp1 = Node(rand(2))
     mousestate = addmousestate!(ax.scene)
@@ -40,6 +42,7 @@ function selectTP(file = "data")
         @info "doing experiment: $k"
         for r in v.runs
             track[] = r.data.track.coords
+            rawtrack[] = r.data.track.rawcoords
             feeder[] = [r.data.feeder]
             video[] = r.metadata.comment
             display(scene)
