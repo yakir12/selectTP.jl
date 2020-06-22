@@ -6,16 +6,20 @@ using AbstractPlotting, GLMakie, MakieLayout, Colors
 
 export selectTP
 
+_cmap(t) = range(HSL(colorant"green"), stop = HSL(colorant"red"), length = length(t))
+
 function selectTP(file = "data")
     data = deserialize(file)
     scene, layout = layoutscene()
-    ax = layout[1, 1] = LAxis(scene, aspect = DataAspect())
+    video = Node("a")
+    # layout[1, 1] = LText(scene, video)#, tellheight = true)
+    ax = layout[1, 1] = LAxis(scene, aspect = DataAspect(), title = video)
     track = Node(rand(DungBase.Point, 10))
     rawtrack = Node(rand(DungBase.Point, 10))
     feeder = Node(rand(DungBase.Point, 1))
-    lines!(ax, track)
-    lines!(ax, rawtrack, color = RGBA(0,1,0,0.5))
-    scatter!(ax, feeder, color = :green, markersize = 8px)
+    lines!(ax, track, color = map(_cmap, track))
+    scatter!(ax, rawtrack, markersize = 6px, color = map(_cmap, rawtrack))
+    scatter!(ax, feeder, color = :blue, markersize = 8px)
     tp1 = Node(rand(2))
     mousestate = addmousestate!(ax.scene)
     onmouseover(mousestate) do state
@@ -28,8 +32,7 @@ function selectTP(file = "data")
     tp2 = map(tp) do i
         track[][i:i]
     end
-    scatter!(ax, tp2, color = RGBA(1,0,0,0.5), markersize = 10px)
-    video = Node("")
+    scatter!(ax, tp2, color = RGBA(0,0,0,0.5), markersize = 10px)
     onmouseleftclick(mousestate) do state
         println(string(video[], ",", tp[]))
     end
@@ -42,7 +45,7 @@ function selectTP(file = "data")
         @info "doing experiment: $k"
         for r in v.runs
             track[] = r.data.track.coords
-            rawtrack[] = r.data.track.rawcoords
+            rawtrack[] = r.data.track.rawcoords.xy
             feeder[] = [r.data.feeder]
             video[] = r.metadata.comment
             display(scene)
@@ -50,7 +53,8 @@ function selectTP(file = "data")
             wait(c)
         end
     end
-    @warn "Finished!!!"
+    GLMakie.destroy!(display(scene))
+    @info "Finished!!!"
 end
 
 end
