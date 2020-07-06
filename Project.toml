@@ -13,6 +13,7 @@ MakieLayout = "5a521ce4-ebb9-4793-b5b7-b334dfe8393c"
 Serialization = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
 [compat]
+AbstractPlotting = "0.12"
 julia = "1"
 
 [extras]
